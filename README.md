@@ -92,7 +92,7 @@ $faker = SedkiyFaker::locale('fr_FR')
 To configure, simply specify your desired locale in your `.env` file:
 
 ```env
-APP_FAKER_LOCALE=ar_MA
+FAKER_LOCALE=ar_MA
 # Or use the package-specific override:
 SEDKIY_FAKER_LOCALE=ar_MA
 ```
