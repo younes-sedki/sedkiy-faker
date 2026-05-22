@@ -88,6 +88,16 @@ class SedkiyFakerServiceProvider extends ServiceProvider
             __DIR__ . '/../config/sedkiy-faker.php' => config_path('sedkiy-faker.php'),
         ], 'sedkiy-faker-config');
 
+        $locales = array_keys(self::LOCALE_PROVIDERS);
+
+        foreach ($locales as $locale) {
+            $abstract = \Faker\Generator::class . ':' . $locale;
+
+            if (! $this->app->bound($abstract)) {
+                $this->app->singleton($abstract, fn () => SedkiyFaker::locale($locale)->make());
+            }
+        }
+
         // Resolve the default locale
         $locale = config('sedkiy-faker.default_locale')
             ?? config('app.faker_locale')

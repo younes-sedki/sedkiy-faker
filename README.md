@@ -67,33 +67,38 @@ $faker = SedkiyFaker::locale('fr_FR')
     ->make();
 ```
 
-### Laravel
+### Laravel (Zero Code Changes)
 
-Set the locale in your `.env` file:
+Sedkiy Faker automatically hooks into Laravel's native `fake()` helper and `$this->faker` property. 
+**You do not need to change a single line of your factory or seeder code!**
+
+Just set your desired locale in your `.env` file:
 
 ```env
-SEDKIY_FAKER_LOCALE=ar_DZ
+APP_FAKER_LOCALE=ar_MA
+# or use the package-specific one: SEDKIY_FAKER_LOCALE=ar_MA
 ```
 
-If omitted, the package falls back to `app.faker_locale` in `config/app.php`, then `en_US`.
-
-The service provider automatically attaches the correct providers to Laravel's `fake()` helper. No other configuration is required.
+That's it! Laravel will now automatically use the culturally accurate Sedkiy providers for the selected locale.
 
 ```php
 // database/factories/UserFactory.php
 
 public function definition(): array
 {
+    // These will now automatically generate culturally accurate data for ar_MA!
     return [
-        'name'    => fake()->name(),
-        'address' => fake()->streetAddress(),
-        'phone'   => fake()->mobileNumber(),
-        'email'   => fake()->freeEmail(),
+        'name'    => fake()->name(),         // e.g. "Youssef Alami"
+        'address' => fake()->streetAddress(),// e.g. "Avenue Hassan II"
+        'phone'   => fake()->phoneNumber(),  // e.g. "+212 6 12 34 56 78"
+        'email'   => fake()->freeEmail(),    // e.g. "youssef@menara.ma"
     ];
 }
 ```
 
-To publish the configuration file:
+If omitted, the package falls back to `app.faker_locale` in `config/app.php`, then `en_US`.
+
+To publish the configuration file (optional):
 
 ```bash
 php artisan vendor:publish --tag="sedkiy-faker-config"
