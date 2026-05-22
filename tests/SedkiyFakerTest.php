@@ -68,4 +68,28 @@ class SedkiyFakerTest extends TestCase
         $this->assertInstanceOf(\Faker\Generator::class, $faker);
         $this->assertIsString($faker->realText());
     }
+
+    public function test_laravel_generator_is_extended(): void
+    {
+        config(['app.faker_locale' => 'ar_MA']);
+
+        $generator = $this->app->make(\Faker\Generator::class);
+        
+        $this->assertContains('Sedkiy\Faker\Providers\Ma\Person', array_map('get_class', $generator->getProviders()));
+    }
+
+    public function test_laravel_locale_specific_generator_is_extended(): void
+    {
+        $abstract = \Faker\Generator::class . ':ar_MA';
+
+        if (! $this->app->bound($abstract)) {
+            $this->app->singleton($abstract, function () {
+                return \Faker\Factory::create('ar_MA');
+            });
+        }
+
+        $generator = $this->app->make($abstract);
+
+        $this->assertContains('Sedkiy\Faker\Providers\Ma\Person', array_map('get_class', $generator->getProviders()));
+    }
 }

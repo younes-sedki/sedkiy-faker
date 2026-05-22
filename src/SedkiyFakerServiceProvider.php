@@ -90,26 +90,32 @@ class SedkiyFakerServiceProvider extends ServiceProvider
 
         $locales = array_keys(self::LOCALE_PROVIDERS);
 
+        // 1. Extend the main Faker\Generator instance (e.g. for $this->faker in tests)
+        $this->app->extend(\Faker\Generator::class, function (\Faker\Generator $generator) {
+            $locale = config('sedkiy-faker.default_locale')
+                ?? config('app.faker_locale')
+                ?? 'en_US';
+
+            if (isset(self::LOCALE_PROVIDERS[$locale])) {
+                foreach (self::LOCALE_PROVIDERS[$locale] as $providerClass) {
+                    $generator->addProvider(new $providerClass($generator));
+                }
+            }
+
+            return $generator;
+        });
+
+        // 2. Extend each locale-specific generator key (for fake('locale') helper calls)
         foreach ($locales as $locale) {
             $abstract = \Faker\Generator::class . ':' . $locale;
 
-            if (! $this->app->bound($abstract)) {
-                $this->app->singleton($abstract, fn () => SedkiyFaker::locale($locale)->make());
-            }
-        }
+            $this->app->extend($abstract, function (\Faker\Generator $generator) use ($locale) {
+                foreach (self::LOCALE_PROVIDERS[$locale] as $providerClass) {
+                    $generator->addProvider(new $providerClass($generator));
+                }
 
-        // Resolve the default locale
-        $locale = config('sedkiy-faker.default_locale')
-            ?? config('app.faker_locale')
-            ?? 'en_US';
-
-        // If this locale has providers, attach them to the default Faker generator
-        if (isset(self::LOCALE_PROVIDERS[$locale]) && $this->app->bound(\Faker\Generator::class)) {
-            $generator = $this->app->make(\Faker\Generator::class);
-
-            foreach (self::LOCALE_PROVIDERS[$locale] as $providerClass) {
-                $generator->addProvider(new $providerClass($generator));
-            }
+                return $generator;
+            });
         }
     }
 }
