@@ -16,20 +16,20 @@
 
 ---
 
-## ⚡ Why Sedkiy Faker?
+## Why Sedkiy Faker?
 
 Standard FakerPHP locale fallbacks produce structurally invalid phone numbers, non-existent cities, and culturally mismatched data. Sedkiy Faker intercepts and fixes these issues at the container level.
 
 | Standard FakerPHP Fallbacks | Sedkiy Faker Localized Engine |
 | :--- | :--- |
-| ❌ Structurally invalid phone formats | 📱 Real ITU-T compliant mobile & landline numbers |
-| ❌ Non-existent / generic city names | 🏙️ Authentic city & region catalogs per territory |
-| ❌ Culturally mismatched name honorifics | 🏷️ Gender & region-specific honors (e.g., `Si`, `Lalla`) |
-| ❌ Complex setup and overriding issues | 🔌 Zero-configuration auto-extension into Laravel |
+| Structurally invalid phone formats | Real ITU-T compliant mobile and landline numbers |
+| Non-existent / generic city names | Authentic city and region catalogs per territory |
+| Culturally mismatched name honorifics | Gender and region-specific honors (e.g., `Si`, `Lalla`) |
+| Complex setup and overriding issues | Zero-configuration auto-extension into Laravel |
 
 ---
 
-## 📦 Requirements
+## Requirements
 
 * **PHP** 8.1 or higher
 * **Composer**
@@ -37,7 +37,7 @@ Standard FakerPHP locale fallbacks produce structurally invalid phone numbers, n
 
 ---
 
-## 🚀 Installation
+## Installation
 
 Install the package via Composer into your development dependencies:
 
@@ -47,7 +47,7 @@ composer require sedkiy/faker --dev
 
 ---
 
-## 📖 Usage
+## Usage
 
 ### Standalone PHP Usage
 
@@ -125,7 +125,7 @@ php artisan vendor:publish --tag="sedkiy-faker-config"
 
 ---
 
-## 🌍 Supported Locales
+## Supported Locales
 
 ### MENA Region
 
@@ -158,7 +158,7 @@ php artisan vendor:publish --tag="sedkiy-faker-config"
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Tests are written using [Pest PHP](https://pestphp.com/) and validate reproducibility, phone number format conforms to ITU-T plans, postcode regex compliance, and container extensions.
 
@@ -169,7 +169,7 @@ vendor/bin/pest
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 We welcome your contributions to extend coverage to more locales! Please follow this workflow:
 
@@ -181,6 +181,6 @@ We welcome your contributions to extend coverage to more locales! Please follow 
 
 ---
 
-## 📄 License
+## License
 
 This package is open-sourced software licensed under the [MIT License](LICENSE.md).
