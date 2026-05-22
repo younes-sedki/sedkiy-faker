@@ -71,7 +71,7 @@ class SedkiyFakerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/sedkiy-faker.php', 'sedkiy-faker');
 
         $this->app->singleton(SedkiyFaker::class, function () {
-            return new SedkiyFaker('en_US');
+            return SedkiyFaker::locale('en_US');
         });
 
         $this->app->alias(SedkiyFaker::class, 'sedkiy.faker');
