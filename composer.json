@@ -29,7 +29,11 @@
     "autoload": {
         "psr-4": {
             "Sedkiy\\Faker\\": "src/"
-        }
+        },
+        "exclude-from-classmap": [
+            "app/",
+            "database/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
